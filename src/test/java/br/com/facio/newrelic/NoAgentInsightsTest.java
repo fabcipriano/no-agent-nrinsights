@@ -20,88 +20,89 @@ public class NoAgentInsightsTest {
     }
 
     @Test
-    public void testRecordCustomEvent_eventTypeOK() {
+    public void testvalidateArguments_eventTypeOK() {
         Map<String, Object> attributes = new HashMap<String,Object>();
         attributes.put("key", "value");
-        insights.recordCustomEvent("MyCustom2_Transaction", attributes);
+        insights.validateArguments("MyCustom2_Transaction", attributes);
     }
     
     @Test
-    public void testRecordCustomEvent_eventTypeInvalidCharacter() {        
+    public void testValidateArguments_eventTypeInvalidCharacter() {        
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("eventType argument Must match /^[a-zA-Z0-9:_ ]+$/, be non-null, and less than 256 chars");
 
-        insights.recordCustomEvent("MyCustom2_Transaction$%$#@@@", null);
+        insights.validateArguments("MyCustom2_Transaction$%$#@@@", null);
     }
 
     @Test
-    public void testRecordCustomEvent_eventTypeNull() {        
+    public void testValidateArguments_eventTypeNull() {        
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("eventType cannot be null or empty");
 
-        insights.recordCustomEvent(null, null);
+        insights.validateArguments(null, null);
     }
 
     @Test
-    public void testRecordCustomEvent_eventTypeEmpty() {        
+    public void testValidateArguments_eventTypeEmpty() {        
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("eventType cannot be null or empty");
 
-        insights.recordCustomEvent("", null);
+        insights.validateArguments("", null);
     }
 
     @Test
-    public void testRecordCustomEvent_eventTypeBlank() {
+    public void testValidateArguments_eventTypeBlank() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("eventType cannot be null or empty");
 
-        insights.recordCustomEvent("          ", null);
+        insights.validateArguments("          ", null);
     }
 
     @Test
-    public void testRecordCustomEvent_eventTypeGreaterThan256Chars() {
+    public void testValidateArguments_eventTypeGreaterThan256Chars() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("eventType cannot be null or empty");
 
-        insights.recordCustomEvent("Nomedetransacaomaiorque256caracterespra"
+        insights.validateArguments("Nomedetransacaomaiorque256caracterespra"
                 + "testarseasuitedetestescomonomedessemetodosuperaonumeromaximode256caracteres"
                 + "masparecequeemuitodificilcriarumnomedessetamanhoporcontadissonosvamosfazerum"
                 + "controlcedepoisumqueridocontrolcpoisaimaginacaopracriarumnomebastantegrandeestaacabando", null);
     }
 
     @Test
-    public void testRecordCustomEvent_attributesIsNull() {
+    public void testValidateArguments_attributesIsNull() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("attributes cannot be null or empty");
 
-        insights.recordCustomEvent("MyCustom2_Transaction", null);
+        insights.validateArguments("MyCustom2_Transaction", null);
     }
 
     @Test
-    public void testRecordCustomEvent_attributesIsEmpty() {
+    public void testValidateArguments_attributesIsEmpty() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("attributes cannot be null or empty");
 
-        insights.recordCustomEvent("MyCustom2_Transaction", new HashMap<String,Object>());
+        insights.validateArguments("MyCustom2_Transaction", new HashMap<String,Object>());
     }
     
     @Test
-    public void testRecordCustomEvent_attributesValuesIsOkWithBooleanNumberString() {
+    public void testValidateArguments_attributesValuesIsOkWithBooleanNumberString() {
         Map<String, Object> attributes = new HashMap<String,Object>();
         attributes.put("keyWithString", "value");
         attributes.put("keyWithNumber", 666);
+        attributes.put("keyWithFloat", 10.99);
         attributes.put("keyWithBoolean", false);
-        insights.recordCustomEvent("MyCustom2_Transaction", attributes);
+        insights.validateArguments("MyCustom2_Transaction", attributes);
     }
     
     @Test
-    public void testRecordCustomEvent_attributesValuesIsNOTBooleanNumberString() {
+    public void testValidateArguments_attributesValuesIsNOTBooleanNumberString() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Wrong attributes values. Each key should be a String and each value should be a "
                 + "String, Number, or Boolean.");
 
         Map<String, Object> attributes = createAttributeNotAllowed();
-        insights.recordCustomEvent("MyCustom2_Transaction", attributes);
+        insights.validateArguments("MyCustom2_Transaction", attributes);
     }
 
     private Map<String, Object> createAttributeNotAllowed() {

@@ -9,6 +9,8 @@ import java.util.Map;
 public class NoAgentInsights {
     
     private static final String PATTERN = "^[a-zA-Z0-9:_ ]+$";
+    
+    private ConverterMapJSON map2json = new ConverterMapJSON();
 
     /**
      * 
@@ -18,9 +20,10 @@ public class NoAgentInsights {
     public void recordCustomEvent(String eventType, Map<String, Object> attributes) {
         validateArguments(eventType, attributes);
         
+        String json = map2json.convert(attributes);
     }
 
-    private void validateArguments(String eventType, Map<String, Object> attributes) throws IllegalArgumentException, RuntimeException {
+    void validateArguments(String eventType, Map<String, Object> attributes) throws IllegalArgumentException, RuntimeException {
         validateEventTypeArgument(eventType);
         validateAttributes(attributes);
     }
