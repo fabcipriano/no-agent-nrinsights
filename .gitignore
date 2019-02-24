@@ -35,6 +35,11 @@ local.properties
 .loadpath
 /src/main/resources/rebel.xml
 
+######################
+# Netbeas
+######################
+nbproject/
+
 # External tool builders
 .externalToolBuilders/**
 
